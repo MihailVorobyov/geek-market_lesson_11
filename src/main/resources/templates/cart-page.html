@@ -14,38 +14,41 @@
 
 <body>
 
-<div th:replace="~{navigation :: navi(Shop)}"/>
+<div th:replace="~{navigation :: navi(ShoppingCart)}"/>
 
 <div class="container">
     <br>
-    <h1>@GeekMarket</h1>
+    <h1>Корзина</h1>
     <table class="table">
         <thead class="thead-dark">
         <tr>
             <th>#</th>
-            <th>Категория</th>
             <th>Название товара</th>
             <th>Цена</th>
-            <th></th>
+            <th>Количество</th>
+            <th>Стоимость</th>
+
         </tr>
         </thead>
 
-        <tr class="responsive-row" th:each="product : ${products}">
+        <tr class="responsive-row" th:each="product : ${cart.productMap}">
             <td th:text="${product.id}"/>
-            <td th:text="${product.category.title}"/>
+<!--            <td th:text="${product.category.title}"/>-->
             <td>
                 <span style="font-weight: bold;" th:text="${product.title}"></span>
-                <br>
-                <span th:text="${product.shortDescription}"></span>
+<!--                <br>-->
+<!--                <span th:text="${product.shortDescription}"></span>-->
             </td>
             <td th:text="${product.price}"/>
             <td>
-<!--                <a th:href="@{'/cart/add/' + ${product.id}}">Добавить в корзину</a>-->
-                <form th:action="@{/cart/add}" method="POST">
-                    <input type="number" name="productId" value="">
-                    <input type="submit" value="Добавить в корзину" >
-                </form>
+                <a th:href="@{'/cart/dec/' + ${product.id}}">-</a>
+<!--                <span style="font-weight: bold;" th:text="${cart.productMap.get(${product.id})}"></span>-->
+                <span style="font-weight: bold;" th:text="${quantity}"></span>
+                <a th:href="@{'/cart/inc/' + ${product.id}}">+</a>
             <td/>
+            <td>
+                <span style="font-weight: bold;" th:text="${product.price} * ${quantity}"></span>
+            </td>
         </tr>
     </table>
 </div>
